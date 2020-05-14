@@ -31,11 +31,16 @@ jobs:
     - name: Compile using Ninja
       run: ninja -C $GITHUB_WORKSPACE/Build
 
+    - name: Show directory listing after finish
+      run: |
+        dir
+        dir ./Build
+
     - name: Upload build as artifact
       uses: actions/upload-artifact@v1
       with:
         name: windows-build
-        path: Build
+        path: $GITHUB_WORKSPACE/Build
 
   linux-build:
     runs-on: ubuntu-latest
@@ -45,9 +50,6 @@ jobs:
       
     - name: Install SDL2 development libraries
       run: sudo apt-get install -y libsdl2-dev
-    
-    - name: Install CMake
-      run: sudo apt-get -y install cmake
     
     - name: Install Ninja for compiling
       run: sudo apt-get install -y ninja-build
