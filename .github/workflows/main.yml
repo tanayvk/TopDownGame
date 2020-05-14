@@ -18,7 +18,7 @@ jobs:
       run: sudo apt-get install -y ninja-build
       
     - name: Checkout source code
-    - uses: actions/checkout@v2
+      uses: actions/checkout@v2
       
     - name: Generate ninja build files
       run: cmake $GITHUB_WORKSPACE -B $GITHUB_WORKSPACE/Build -GNinja
