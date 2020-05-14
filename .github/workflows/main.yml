@@ -28,3 +28,9 @@ jobs:
 
     - name: Compile using Ninja
       run: ninja -C $GITHUB_WORKSPACE/Build
+
+    - name: Upload build as artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: Build
+        path: ubuntu-build
