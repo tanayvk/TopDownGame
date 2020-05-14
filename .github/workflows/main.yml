@@ -26,21 +26,20 @@ jobs:
       run: Copy-Item "CMake/SDL2Config.cmake" -Destination "./SDL2-2.0.12"
     
     - name: Generate ninja build files
-      run: cmake $GITHUB_WORKSPACE -B $GITHUB_WORKSPACE/Build -GNinja -DSDL2_DIR="./SDL2-2.0.12"
+      run: cmake . -B ./Build -GNinja -DSDL2_DIR="./SDL2-2.0.12"
 
     - name: Compile using Ninja
-      run: ninja -C $GITHUB_WORKSPACE/Build
+      run: ninja -C ./Build
 
     - name: Show directory listing after finish
       run: |
         dir
-        dir ./Build
 
     - name: Upload build as artifact
       uses: actions/upload-artifact@v1
       with:
         name: windows-build
-        path: $GITHUB_WORKSPACE/Build
+        path: ./Build
 
   linux-build:
     runs-on: ubuntu-latest
