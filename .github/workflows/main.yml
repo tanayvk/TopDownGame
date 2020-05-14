@@ -8,6 +8,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: apt update
+      run: sudo apt-get update
+      
     - name: Install SDL2 development libraries
       run: sudo apt-get install -y libsdl2-dev
     
