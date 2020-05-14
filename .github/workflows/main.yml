@@ -21,9 +21,6 @@ jobs:
       run: |
         (New-Object System.Net.WebClient).DownloadFile("https://www.libsdl.org/release/SDL2-devel-2.0.12-mingw.tar.gz", "SDL.tar.gz")
         TarTool.exe SDL.tar.gz ./
-    
-    - name: List workspace files
-      run: dir
      
     - name: Copy SDL2Config.cmake
       run: Copy-Item "CMake/SDL2Config.cmake" -Destination "./SDL2-2.0.12"
@@ -31,6 +28,12 @@ jobs:
     - name: Generate ninja build files
       run: cmake $GITHUB_WORKSPACE -B $GITHUB_WORKSPACE/Build -GNinja -DSDL2_DIR="./SDL2-2.0.12"
 
+    - name: Upload artifact for testing
+      uses: actions/upload-artifact@v1
+      with:
+        name: windows-files
+        path: .
+ 
     - name: Compile using Ninja
       run: ninja -C $GITHUB_WORKSPACE/Build
 
