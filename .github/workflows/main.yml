@@ -5,7 +5,36 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  windows-build:
+    runs-on: windows-latest
+    steps:
+    - name: Install Ninja for compiling
+      run: choco install ninja
+      
+    - name: Checkout source code
+      uses: actions/checkout@v2
+      
+    - name: Install Tartool
+      run: choco install tartool
+      
+    - name: Download and Extract SDL2 development libraries
+      run: |
+        (New-Object System.Net.WebClient).DownloadFile("https://www.libsdl.org/release/SDL2-devel-2.0.12-mingw.tar.gz", "SDL.tar.gz")
+        TarTool.exe SDL.tar.gz ./
+    
+    - name: Generate ninja build files
+      run: cmake $GITHUB_WORKSPACE -B $GITHUB_WORKSPACE/Build -GNinja
+
+    - name: Compile using Ninja
+      run: ninja -C $GITHUB_WORKSPACE/Build
+
+    - name: Upload build as artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: windows-build
+        path: Build
+
+  linux-build:
     runs-on: ubuntu-latest
     steps:
     - name: apt update
@@ -34,3 +63,4 @@ jobs:
       with:
         name: ubuntu-build
         path: Build
+  
