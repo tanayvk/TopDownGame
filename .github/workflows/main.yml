@@ -28,12 +28,6 @@ jobs:
     - name: Generate ninja build files
       run: cmake $GITHUB_WORKSPACE -B $GITHUB_WORKSPACE/Build -GNinja -DSDL2_DIR="./SDL2-2.0.12"
 
-    - name: Upload artifact for testing
-      uses: actions/upload-artifact@v1
-      with:
-        name: windows-files
-        path: .
- 
     - name: Compile using Ninja
       run: ninja -C $GITHUB_WORKSPACE/Build
 
