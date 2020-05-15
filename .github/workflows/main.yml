@@ -14,7 +14,7 @@ jobs:
     - name: Install Ninja for compiling
       run: |
         (New-Object System.Net.WebClient).DownloadFile("https://github.com/ninja-build/ninja/releases/download/v1.10.0/ninja-win.zip", "Ninja.zip")
-        7z e Ninja.zip -o. ninja.exe
+        7z e Ninja.zip ninja.exe
 
     - name: Download and Extract SDL2 development libraries
       run: |
