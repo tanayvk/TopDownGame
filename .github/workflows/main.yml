@@ -10,12 +10,15 @@ jobs:
     steps:
     - name: Checkout source code
       uses: actions/checkout@v2
+    
+    - name: Check location
+      run: Get-Location
       
     - name: Install Ninja for compiling
       run: |
         (New-Object System.Net.WebClient).DownloadFile("https://github.com/ninja-build/ninja/releases/download/v1.10.0/ninja-win.zip", "Ninja.zip")
         7z e Ninja.zip ninja.exe
-        set PATH=%PATH%;%CD%
+        $env:Path += ";$(get-location)" 
     - name: Download and Extract SDL2 development libraries
       run: |
         (New-Object System.Net.WebClient).DownloadFile("https://www.libsdl.org/release/SDL2-devel-2.0.12-mingw.tar.gz", "SDL.tar.gz")
