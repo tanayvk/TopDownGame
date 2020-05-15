@@ -8,19 +8,19 @@ jobs:
   windows-build:
     runs-on: windows-latest
     steps:
-    - name: Install Ninja for compiling
-      run: choco install ninja
-      
     - name: Checkout source code
       uses: actions/checkout@v2
       
-    - name: Install Tartool
-      run: choco install tartool
-      
+    - name: Install Ninja for compiling
+      run: |
+        (New-Object System.Net.WebClient).DownloadFile("https://github.com/ninja-build/ninja/releases/download/v1.10.0/ninja-win.zip", "Ninja.zip")
+        7z e Ninja.zip -o. ninja.exe
+
     - name: Download and Extract SDL2 development libraries
       run: |
         (New-Object System.Net.WebClient).DownloadFile("https://www.libsdl.org/release/SDL2-devel-2.0.12-mingw.tar.gz", "SDL.tar.gz")
-        TarTool.exe SDL.tar.gz ./
+        7z x SDL.tar.gz
+        7z x SDL.tar
      
     - name: Copy SDL2Config.cmake
       run: Copy-Item "CMake/SDL2Config.cmake" -Destination "./SDL2-2.0.12"
