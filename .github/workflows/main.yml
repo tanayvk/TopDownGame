@@ -12,13 +12,16 @@ jobs:
       uses: actions/checkout@v2
     
     - name: Check location
-      run: Get-Location
+      run: echo "$(get-location)"
       
     - name: Install Ninja for compiling
       run: |
         (New-Object System.Net.WebClient).DownloadFile("https://github.com/ninja-build/ninja/releases/download/v1.10.0/ninja-win.zip", "Ninja.zip")
         7z e Ninja.zip ninja.exe
-        $env:Path += ";$(get-location)" 
+    
+    - name: Directory listing
+      run: dir
+        
     - name: Download and Extract SDL2 development libraries
       run: |
         (New-Object System.Net.WebClient).DownloadFile("https://www.libsdl.org/release/SDL2-devel-2.0.12-mingw.tar.gz", "SDL.tar.gz")
@@ -29,7 +32,7 @@ jobs:
       run: Copy-Item "CMake/SDL2Config.cmake" -Destination "./SDL2-2.0.12"
     
     - name: Generate ninja build files
-      run: cmake . -B ./Build -GNinja -DSDL2_DIR="./SDL2-2.0.12"
+      run: cmake . -B ./Build -GNinja -DCMAKE_MAKE_PROGRAM="$(get-location)\ninja.exe" -DSDL2_DIR="./SDL2-2.0.12"
 
     - name: Compile using Ninja
       run: ninja -C ./Build
