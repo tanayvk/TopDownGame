@@ -1,6 +1,5 @@
 #include "Game.h"
-#include <iostream>
-
+#include <iostream> 
 //bool LoadResources();
 //SDL_Texture* LoadTextureFromImageFile(std::string imageFilePath);
 
@@ -37,7 +36,7 @@ int main(int argc, char* argv[])
     std::cout << "Error with initialization." << std::endl;
     return 1;
   }
-
+  SDL_Log("Game started!\n");
   while ( game->IsRunning() )
   {
     game->Loop();
