@@ -16,14 +16,13 @@ jobs:
       with:
         vcpkgGitCommitId: c7ab9d3
         vcpkgArguments: sdl2
-        appendedCacheKey: sdl2
+        vcpkgTriplet: x64-windows
     - name: run-cmake
       uses: lukka/run-cmake@v2.5
       with:
         buildDirectory: ${{ github.workspace }}/Build
         useVcpkgToolchainFile: true
         cmakeBuildType: Release
-        vcpkgTriplet: x64-windows
         
     - name: Upload build as artifact
       uses: actions/upload-artifact@v1
