@@ -5,8 +5,12 @@
 class SpriteComponent : public ActorComponent
 {
 public:
-  SpriteComponent(class Actor* theOwner);
-  ~SpriteComponent();
+    SpriteComponent(class Actor* theOwner, std::string theTextureId, std::string filePath);
+    ~SpriteComponent();
 
-  virtual void Draw(SDL_Renderer* renderer);
+    virtual void Draw();
+protected:
+    int texWidth;
+    int texHeight;
+    std::string textureId;
 };

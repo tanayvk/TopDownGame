@@ -1,29 +1,26 @@
-#include "SpriteComponent.h"
 #include "Actor.h"
 #include "../Game.h"
+#include "SpriteComponent.h"
+#include "../Renderer.h"
 
-SpriteComponent::SpriteComponent(Actor* theOwner)
+SpriteComponent::SpriteComponent(Actor* theOwner, std::string theTextureId, std::string filePath)
 	:ActorComponent(theOwner)
+	,textureId(theTextureId)
 {
-  SDL_Log("reached here..");
-	theOwner->GetGame()->AddSprite(this);
-  SDL_Log("Adding guy to the game sprites...");
+	owner->GetGame()->GetRenderer()->AddTexture(theTextureId, filePath);
+	owner->GetGame()->GetRenderer()->QueryTexture(theTextureId, &texWidth, &texHeight);
+	owner->GetGame()->AddSprite(this);
 }
 
 SpriteComponent::~SpriteComponent()
 {
-	//owner->GetGame()->RemoveSprite(this);
+	owner->GetGame()->RemoveSprite(this);
 }
 
-void SpriteComponent::Draw(SDL_Renderer* renderer)
+void SpriteComponent::Draw()
 {
-  SDL_Rect r;
-  r.x = (owner->GetPosition()).x - 25;
-  r.y = (owner->GetPosition()).y - 25;
-  r.w = 50;
-  r.h = 50;
-
-  SDL_SetRenderDrawColor( renderer, 0, 0, 255, 255 );
-
-  SDL_RenderFillRect( renderer, &r );
+	owner->GetGame()->GetRenderer()->DrawTexture(textureId, owner->GetPosition().x,
+														owner->GetPosition().y,
+														texWidth,
+														texHeight);
 }
