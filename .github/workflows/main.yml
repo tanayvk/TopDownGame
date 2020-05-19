@@ -14,7 +14,9 @@ jobs:
     - name: run-vcpkg
       uses: lukka/run-vcpkg@v2.1
       with:
-        setupOnly: true
+        vcpkgGitCommitId: c7ab9d3
+        vcpkgArguments: sdl2
+        appendedCacheKey: sdl2
     - name: run-cmake
       uses: lukka/run-cmake@v2.5
       with:
