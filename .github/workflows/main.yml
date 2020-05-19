@@ -14,8 +14,7 @@ jobs:
     - name: run-vcpkg
       uses: lukka/run-vcpkg@v2.1
       with:
-        vcpkgArguments: sdl2
-        appendedCacheKey: sdl2
+        setupOnly: true
     - name: run-cmake
       uses: lukka/run-cmake@v2.5
       with:
