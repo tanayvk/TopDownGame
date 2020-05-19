@@ -10,42 +10,19 @@ jobs:
     steps:
     - name: Checkout source code
       uses: actions/checkout@v2
-    
-    - name: Check location
-      run: echo "$(get-location)"
       
-    - name: Install Ninja for compiling
-      run: |
-        (New-Object System.Net.WebClient).DownloadFile("https://github.com/ninja-build/ninja/releases/download/v1.10.0/ninja-win.zip", "Ninja.zip")
-        7z e Ninja.zip ninja.exe
-    
-    - name: Directory listing
-      run: dir
+    - name: run-cmake
+      uses: lukka/run-cmake@v2.5
+      with:
+        buildDirectory: ${{ github.workspace }}/Build
+        useVcpkgToolchainFile: true
+        cmakeBuildType: Release
         
-    - name: Download and Extract SDL2 development libraries
-      run: |
-        (New-Object System.Net.WebClient).DownloadFile("https://www.libsdl.org/release/SDL2-devel-2.0.12-mingw.tar.gz", "SDL.tar.gz")
-        7z x SDL.tar.gz
-        7z x SDL.tar
-     
-    - name: Copy SDL2Config.cmake
-      run: Copy-Item "CMake/SDL2Config.cmake" -Destination "./SDL2-2.0.12"
-    
-    - name: Generate ninja build files
-      run: cmake . -B ./Build -GNinja -DCMAKE_MAKE_PROGRAM="$(get-location)\ninja.exe" -DSDL2_DIR="./SDL2-2.0.12"
-
-    - name: Compile using Ninja
-      run: ./ninja -C ./Build
-
-    - name: Show directory listing after finish
-      run: |
-        dir
-
     - name: Upload build as artifact
       uses: actions/upload-artifact@v1
       with:
         name: windows-build
-        path: ./Build
+        path: ${{ github.workspace }}/Build
 
   linux-build:
     runs-on: ubuntu-latest
