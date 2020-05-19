@@ -23,6 +23,7 @@ jobs:
         buildDirectory: ${{ github.workspace }}/Build
         useVcpkgToolchainFile: true
         cmakeBuildType: Release
+        vcpkgTriplet: x64-windows
         
     - name: Upload build as artifact
       uses: actions/upload-artifact@v1
