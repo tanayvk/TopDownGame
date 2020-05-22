@@ -4,8 +4,8 @@ project(PlatformerShooter)
 
 set(CMAKE_CXX_STANDARD, 17)
 
-find_package(SDL2 REQUIRED)
-include_directories(${SDL2_INCLUDE_DIRS})
+find_package(SDL2 CONFIG REQUIRED)
+find_package(sdl2-image CONFIG REQUIRED)
 
 add_subdirectory(Source)
 

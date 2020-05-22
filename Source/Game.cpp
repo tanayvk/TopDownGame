@@ -1,6 +1,7 @@
 #include "Game.h"
 #include <string>
-#include <SDL.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <algorithm>
 #include "Utilities/Math.h"
 #include "Actors/Actor.h"
@@ -21,8 +22,12 @@ bool Game::Initialize()
         return 0;
     }
 
-
-
+    int imgFlags = IMG_INIT_PNG;
+    if( !( IMG_Init( imgFlags ) & imgFlags ) )
+    {
+        return 0;
+    }
+    
     window = SDL_CreateWindow("Platformer Shooter",
                             SDL_WINDOWPOS_UNDEFINED,
                             SDL_WINDOWPOS_UNDEFINED,
