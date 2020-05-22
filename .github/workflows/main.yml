@@ -22,11 +22,11 @@ jobs:
         cache-name: cache
       with:
         path: c:/vcpkg/installed
-        key: sdl2 sdl2-image
+        key: sdl2 sdl2-image x64
 
     - name: Install SDL2 and SDL2_image using vcpkg
       run: |
-        vcpkg install sdl2 sdl2-image
+        vcpkg install sdl2:x64-windows sdl2-image:x64-windows
 
     - name: Generate ninja build files
       run: cmake ${{ github.workspace }} -B ${{ github.workspace }}/Build -GNinja -DCMAKE_MAKE_PROGRAM="$(get-location)\ninja.exe" -DVCPKG_TARGET_TRIPLET=x64-windows "-DCMAKE_TOOLCHAIN_FILE=c:/vcpkg/scripts/buildsystems/vcpkg.cmake"
