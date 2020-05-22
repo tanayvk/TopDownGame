@@ -10,19 +10,21 @@ jobs:
     steps:
     - name: Checkout source code
       uses: actions/checkout@v2
-    
-    - name: run-vcpkg
-      uses: lukka/run-vcpkg@v2.1
-      with:
-        vcpkgGitCommitId: c7ab9d3
-        vcpkgArguments: sdl2 sdl2-image
-        vcpkgTriplet: x64-windows
-    - name: run-cmake
-      uses: lukka/run-cmake@v2.5
-      with:
-        buildDirectory: ${{ github.workspace }}/Build
-        useVcpkgToolchainFile: true
-        cmakeBuildType: Release
+
+    - name: Install Ninja for compiling
+      run: |
+        (New-Object System.Net.WebClient).DownloadFile("https://github.com/ninja-build/ninja/releases/download/v1.10.0/ninja-win.zip", "Ninja.zip")
+        7z e Ninja.zip ninja.exe   
+
+    - name: Install SDL2 and SDL2_image using vcpkg
+      run: |
+        vcpkg install sdl2 sdl2-image
+
+    - name: Generate ninja build files
+      run: cmake ${{ github.workspace }} -B $${{ github.workspace }}/Build -GNinja "-DCMAKE_TOOLCHAIN_FILE=$VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+
+    - name: Compile using Ninja
+      run: ./ninja -C ${{ github.workspace }}/Build
         
     - name: Upload build as artifact
       uses: actions/upload-artifact@v1
