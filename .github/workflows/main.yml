@@ -15,7 +15,7 @@ jobs:
       uses: lukka/run-vcpkg@v2.1
       with:
         vcpkgGitCommitId: c7ab9d3
-        vcpkgArguments: sdl2
+        vcpkgArguments: sdl2 sdl2-image
         vcpkgTriplet: x64-windows
     - name: run-cmake
       uses: lukka/run-cmake@v2.5
