@@ -21,7 +21,7 @@ jobs:
         vcpkg install sdl2 sdl2-image
 
     - name: Generate ninja build files
-      run: cmake ${{ github.workspace }} -B $${{ github.workspace }}/Build -GNinja "-DCMAKE_TOOLCHAIN_FILE=$VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+      run: cmake ${{ github.workspace }} -B ${{ github.workspace }}/Build -GNinja "-DCMAKE_TOOLCHAIN_FILE=$VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
 
     - name: Compile using Ninja
       run: ./ninja -C ${{ github.workspace }}/Build
