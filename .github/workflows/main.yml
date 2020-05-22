@@ -16,6 +16,14 @@ jobs:
         (New-Object System.Net.WebClient).DownloadFile("https://github.com/ninja-build/ninja/releases/download/v1.10.0/ninja-win.zip", "Ninja.zip")
         7z e Ninja.zip ninja.exe   
 
+    - name: Cache
+      uses: actions/cache@v1
+      env:
+        cache-name: cache
+      with:
+        path: c:/vcpkg/installed
+        key: sdl2 sdl2-image
+
     - name: Install SDL2 and SDL2_image using vcpkg
       run: |
         vcpkg install sdl2 sdl2-image
