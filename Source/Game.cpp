@@ -28,7 +28,7 @@ bool Game::Initialize()
         return 0;
     }
     
-    window = SDL_CreateWindow("Platformer Shooter",
+    window = SDL_CreateWindow("Top Down Game",
                             SDL_WINDOWPOS_UNDEFINED,
                             SDL_WINDOWPOS_UNDEFINED,
                             800,
@@ -50,7 +50,7 @@ bool Game::Initialize()
     addActor->SetPosition({100, 400});
     AddActor(addActor);
 
-    new SpriteComponent(addActor, "player", "player.bmp");
+    new SpriteComponent(addActor, "player", "Assets/PNG/Survivor 1/survivor1_gun.png");
 
     return 1;
 }
