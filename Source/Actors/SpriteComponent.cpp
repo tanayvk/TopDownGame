@@ -24,3 +24,7 @@ void SpriteComponent::Draw()
 														texWidth,
 														texHeight);
 }
+
+void SpriteComponent::Update(float deltaTime)
+{
+}

@@ -6,7 +6,10 @@
 #include "Utilities/Math.h"
 #include "Actors/Actor.h"
 #include "Actors/SpriteComponent.h"
+#include "Actors/MoveComponent.h"
 #include "Renderer.h"
+
+MoveComponent* movingThisGuy;
 
 Game::Game()
 {
@@ -47,10 +50,12 @@ bool Game::Initialize()
     AmIRunning = true;
 
     Actor* addActor = new Actor(this);
-    addActor->SetPosition({100, 400});
+    addActor->SetPosition(Vector2(100, 400));
     AddActor(addActor);
 
     new SpriteComponent(addActor, "player", "Assets/PNG/Survivor 1/survivor1_gun.png");
+    movingThisGuy = new MoveComponent(addActor, 3);
+    movingThisGuy->Move(Vector2(10, 0));
 
     return 1;
 }
@@ -86,6 +91,17 @@ void Game::ProcessInput()
             AmIRunning = false;
         }
     }
+
+    const Uint8* state = SDL_GetKeyboardState(NULL);
+    
+    if (state[SDL_SCANCODE_W])
+      movingThisGuy->Move(Vector2(0, -20));
+    if (state[SDL_SCANCODE_A])
+      movingThisGuy->Move(Vector2(-20, 0));
+    if (state[SDL_SCANCODE_S])
+      movingThisGuy->Move(Vector2(0, 20));
+    if (state[SDL_SCANCODE_D])
+      movingThisGuy->Move(Vector2(20, 0));
 }
 
 void Game::Update()
@@ -105,9 +121,6 @@ void Game::Update()
     for (auto actor : actors)
     {
         actor->Update(deltaTime);
-        // temp
-        Vector2 pos = actor->GetPosition();
-        actor->SetPosition({pos.x + 1, pos.y});
     }
 }
 

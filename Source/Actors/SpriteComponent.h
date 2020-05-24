@@ -1,6 +1,5 @@
 #pragma once
 #include "ActorComponent.h"
-#include <SDL.h>
 
 class SpriteComponent : public ActorComponent
 {
@@ -8,7 +7,8 @@ public:
     SpriteComponent(class Actor* theOwner, std::string theTextureId, std::string filePath);
     ~SpriteComponent();
 
-    virtual void Draw();
+    void Draw();
+    void Update(float deltaMs);
 protected:
     int texWidth;
     int texHeight;

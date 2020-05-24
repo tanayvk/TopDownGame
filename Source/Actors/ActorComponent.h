@@ -6,7 +6,7 @@ class ActorComponent {
 public:
   ActorComponent(class Actor* ownerActor);
   virtual ~ActorComponent();
-  void Update(float deltaMs);
+  virtual void Update(float deltaMs);
 
 protected:
   class Actor* owner;
