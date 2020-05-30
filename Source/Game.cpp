@@ -1,6 +1,6 @@
 #include "Game.h"
 #include <string>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <algorithm>
 #include "Utilities/Math.h"
 #include "Actors/Actor.h"
