@@ -16,20 +16,8 @@ jobs:
         (New-Object System.Net.WebClient).DownloadFile("https://github.com/ninja-build/ninja/releases/download/v1.10.0/ninja-win.zip", "Ninja.zip")
         7z e Ninja.zip ninja.exe   
 
-    - name: Cache
-      uses: actions/cache@v1
-      env:
-        cache-name: cache
-      with:
-        path: c:/vcpkg/installed
-        key: sdl2 sdl2-image x64
-
-    - name: Install SDL2 and SDL2_image using vcpkg
-      run: |
-        vcpkg install sdl2:x64-windows sdl2-image:x64-windows
-
     - name: Generate ninja build files
-      run: cmake ${{ github.workspace }} -B ${{ github.workspace }}/Build -GNinja -DCMAKE_MAKE_PROGRAM="$(get-location)\ninja.exe" -DVCPKG_TARGET_TRIPLET=x64-windows "-DCMAKE_TOOLCHAIN_FILE=c:/vcpkg/scripts/buildsystems/vcpkg.cmake"
+      run: cmake ${{ github.workspace }} -B ${{ github.workspace }}/Build -GNinja -DCMAKE_MAKE_PROGRAM="$(get-location)\ninja.exe"
 
     - name: Compile using Ninja
       run: ./ninja -C ${{ github.workspace }}/Build
@@ -46,9 +34,6 @@ jobs:
     - name: apt update
       run: sudo apt-get update
       
-    - name: Install SDL2 development libraries
-      run: sudo apt-get install -y libsdl2-dev
-    
     - name: Install Ninja for compiling
       run: sudo apt-get install -y ninja-build
       

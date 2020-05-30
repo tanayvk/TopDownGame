@@ -1,5 +1,6 @@
 #include "Renderer.h"
-#include <SDL2/SDL_image.h>
+#define SDL_STBIMAGE_IMPLEMENTATION
+#include <SDL_stbimage.h>
 
 bool Renderer::Initialize(SDL_Window* window)
 {
@@ -19,7 +20,7 @@ void Renderer::CleanUp()
 
 SDL_Texture* Renderer::LoadTextureFromImageFile(std::string imageFilePath)
 {
-    SDL_Surface* bmp = IMG_Load(imageFilePath.c_str());
+    SDL_Surface* bmp = STBIMG_Load(imageFilePath.c_str());
     if ( bmp == nullptr )
     {
         SDL_Log("SDL_LoadBMP Error: %s", SDL_GetError());
